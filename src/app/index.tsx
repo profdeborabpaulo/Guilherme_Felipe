@@ -1,24 +1,43 @@
 //Importando os componentes do react-native
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function HomeScreen() {
   const[tarefa, setTarefa]=useState('');
-  const[tarefas, setTarefas]=useState('');
-  'Estudar React-Native',
+  const[tarefas, setTarefas]=useState([
+    'Estudar React-Native',
+    'Aprender useState',
+    'Criar a primeira tela',
+  ]);
+  function adicionarTarefa( ) {
+    if(!tarefa.trim())//impede tarefas em branco
+    return;
+    setTarefas([...tarefas, tarefa]);
+    setTarefa('');
+  }
+  // Próxima etapa:
   return(
-    <view>
-      <text> Gerenciador de Tarefas</text>
+    <View style={styles.container}>
 
-      <TextInput
+      <Text> Gerenciador de Tarefas</Text>
+
+      <TextInput style={styles.input}
       placeholder='Digite uma tarefa: '
+      value={tarefa}
+      onChangeText={setTarefa}
       />
-
-    </view>
+      {tarefas.map((item, index)=>
+      (<Text
+        key={index}
+        style={styles.item}
+        >
+          .{item}
+          </Text>
+      ))}
+    </View>
   );
-
 }
-// Criando o Estilo para o index.tsx
+// Configurando o estilo do index.tsx
 const styles=StyleSheet.create({
   container: {
     flex: 1,
@@ -34,5 +53,9 @@ const styles=StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 8,
     padding: 12,
+  },
+  item: {
+    fontSize: 16,
+    marginTop: 10,
   }
-})
+});
